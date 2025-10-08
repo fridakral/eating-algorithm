@@ -1,0 +1,61 @@
+<div>
+  @if (step === Step.START){
+    <p>Ennél valamit?</p>
+    <button (click)="chooseYesOrNo(true)">Igen</button>
+    <button (click)="chooseYesOrNo(false)">Nem</button>
+  }
+  @if (step === Step.GIF){
+    <p>Noice! Have a nice day 🎉</p>
+    <button (click)="reset()">Újra</button>
+  }
+  @if (step === Step.HUNGER_CHECK){
+    <p>Éhes vagy, vagy csak unatkozol?</p>
+    <button (click)="hungerCheck('Éhes vagyok')">Éhes vagyok</button>
+    <button (click)="hungerCheck('Unatkozom')">Unatkozom</button>
+  }
+  @if(step===Step.UNBORED_TIPS){
+    <p>Sétálj, igyál egy teát, nézz egy YouTube videót, olvass.</p>
+    <button (click)="reset()">Újra</button>
+  }
+  @if (step === Step.MEAL_TYPE) {
+    <p>Mit ennél?</p>
+    <button (click)="chooseMeal('Reggeli')">Reggeli</button>
+    <button (click)="chooseMeal('Ebéd')">Ebéd</button>
+    <button (click)="chooseMeal('Vacsora')">Vacsora</button>
+    <button (click)="chooseMeal('Nasi')">Nasi</button>
+  }
+  @if (step === Step.SWEET_OR_SALTY) {
+    <p>Édeset, vagy sósat?</p>
+    <button (click)="chooseTaste('Édes')">Édes</button>
+    <button (click)="chooseTaste('Sós')">Sós</button>
+  }
+  @if(step===Step.FOOD_SUGGESTIONS){
+    @if (selectedMeal === 'Nasi') {
+      <p>Mit szeretnél a nasiból?</p>
+      <button (click)="showFruits()">Joghurt gyümivel/mákkal</button>
+      <button (click)="showNuts()">Egy kis marék olajos mag</button>
+    }@else {
+      <p>Ajánlott ételek (Reggeli/Vacsora - ide jön majd az lista)</p>
+      <button (click)="reset()">Újra</button>
+    }
+  }
+  @if(step === Step.NASI_FRUIT){
+    <p>Elérhető gyümölcsök:</p>
+    <ul>
+      @for (fruit of fruits; track fruit) {
+        <li>{{ fruit.hu.name }}</li>
+      }
+    </ul>
+    <button (click)="reset()">Újra</button>
+  }
+
+  @if(step === Step.NASI_NUTS){
+    <p>Elérhető magvak:</p>
+    <ul>
+      @for (nut of nuts; track nut) {
+        <li>{{ nut.hu.name }}</li>
+      }
+    </ul>
+    <button (click)="reset()">Újra</button>
+  }
+</div>
