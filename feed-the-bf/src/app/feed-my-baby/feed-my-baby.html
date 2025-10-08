@@ -1,22 +1,26 @@
 <div>
-  @if (step === Step.START){
+  @if (step === Step.START) {
     <p>Ennél valamit?</p>
     <button (click)="chooseYesOrNo(true)">Igen</button>
     <button (click)="chooseYesOrNo(false)">Nem</button>
   }
-  @if (step === Step.GIF){
+
+  @if (step === Step.GIF) {
     <p>Noice! Have a nice day 🎉</p>
     <button (click)="reset()">Újra</button>
   }
-  @if (step === Step.HUNGER_CHECK){
+
+  @if (step === Step.HUNGER_CHECK) {
     <p>Éhes vagy, vagy csak unatkozol?</p>
     <button (click)="hungerCheck('Éhes vagyok')">Éhes vagyok</button>
     <button (click)="hungerCheck('Unatkozom')">Unatkozom</button>
   }
-  @if(step===Step.UNBORED_TIPS){
+
+  @if (step === Step.UNBORED_TIPS) {
     <p>Sétálj, igyál egy teát, nézz egy YouTube videót, olvass.</p>
     <button (click)="reset()">Újra</button>
   }
+
   @if (step === Step.MEAL_TYPE) {
     <p>Mit ennél?</p>
     <button (click)="chooseMeal('Reggeli')">Reggeli</button>
@@ -24,22 +28,43 @@
     <button (click)="chooseMeal('Vacsora')">Vacsora</button>
     <button (click)="chooseMeal('Nasi')">Nasi</button>
   }
+
   @if (step === Step.SWEET_OR_SALTY) {
     <p>Édeset, vagy sósat?</p>
     <button (click)="chooseTaste('Édes')">Édes</button>
     <button (click)="chooseTaste('Sós')">Sós</button>
   }
-  @if(step===Step.FOOD_SUGGESTIONS){
+
+  @if (step === Step.FOOD_SUGGESTIONS) {
     @if (selectedMeal === 'Nasi') {
       <p>Mit szeretnél a nasiból?</p>
       <button (click)="showFruits()">Joghurt gyümivel/mákkal</button>
       <button (click)="showNuts()">Egy kis marék olajos mag</button>
-    }@else {
-      <p>Ajánlott ételek (Reggeli/Vacsora - ide jön majd az lista)</p>
-      <button (click)="reset()">Újra</button>
+    }
+
+    @if (selectedMeal === 'Reggeli' || selectedMeal === 'Vacsora') {
+      @if (selectedTaste === 'Édes') {
+        <p>Ajánlott édes ételek:</p>
+        <ul>
+          @for (meal of meals; track meal) {
+            <li>{{ meal.hu.name }}</li>
+          }
+        </ul>
+        <button (click)="reset()">Újra</button>
+      }
+      @if (selectedTaste === 'Sós') {
+        <p>Ajánlott sós ételek:</p>
+        <ul>
+          @for (meal of meals; track meal) {
+            <li>{{ meal.hu.name }}</li>
+          }
+        </ul>
+        <button (click)="reset()">Újra</button>
+      }
     }
   }
-  @if(step === Step.NASI_FRUIT){
+
+  @if (step === Step.NASI_FRUIT) {
     <p>Elérhető gyümölcsök:</p>
     <ul>
       @for (fruit of fruits; track fruit) {
@@ -49,13 +74,106 @@
     <button (click)="reset()">Újra</button>
   }
 
-  @if(step === Step.NASI_NUTS){
+  @if (step === Step.NASI_NUTS) {
     <p>Elérhető magvak:</p>
     <ul>
       @for (nut of nuts; track nut) {
         <li>{{ nut.hu.name }}</li>
       }
     </ul>
+    <button (click)="reset()">Újra</button>
+  }
+
+  @if (step === Step.LUNCH_FOOD_AVAILABLE) {
+    <p>Van étel a hűtőben?</p>
+    <button (click)="foodInFridge(true)">Igen</button>
+    <button (click)="foodInFridge(false)">Nem</button>
+  }
+
+  @if (step === Step.LUNCH_EAT_IT) {
+    <p>Megennéd?</p>
+    <button (click)="eatIt(true)">Igen</button>
+    <button (click)="eatIt(false)">Nem</button>
+  }
+
+  @if (step === Step.LUNCH_COOK_SOMETHING) {
+    <p>Van kedved gyorsan összedobni valamit?</p>
+    <button (click)="cookSomething(true)">Igen</button>
+    <button (click)="cookSomething(false)">Nem</button>
+  }
+
+  @if (step === Step.LUNCH_MEAL_TYPE) {
+    <p>Válassz egy ételtípust:</p>
+    <button (click)="chooseLunchType('Leves')">Leves</button>
+    <button (click)="chooseLunchType('Ragu')">Ragu</button>
+    <button (click)="chooseLunchType('Sült')">Sült</button>
+    <button (click)="chooseLunchType('Rakott')">Rakott</button>
+  }
+
+  @if (step === Step.LUNCH_VEGGIES) {
+    <p>Válassz zöldségeket:</p>
+    <ul>
+      @for (veg of veggies; track veg) {
+        <li>
+          <label>
+            <input
+              type="checkbox"
+              [checked]="false">
+              {{ veg.hu.name }}
+          </label>
+        </li>
+      }
+    </ul>
+    <button (click)="nextLunchStep()">Tovább</button>
+  }
+
+  @if (step === Step.LUNCH_PROTEIN) {
+    <p>Válassz egy fehérjét:</p>
+    <ul>
+      @for (protein of proteins; track protein) {
+        <li>
+          <label>
+            <input type="radio" name="protein" [(ngModel)]="selectedProtein" [value]="protein.hu.name" />
+            {{ protein.hu.name }}
+          </label>
+        </li>
+      }
+    </ul>
+    <button (click)="nextLunchStep()">Tovább</button>
+  }
+
+  @if (step === Step.LUNCH_CARB) {
+    <p>Válassz egy szénhidrátot:</p>
+    <ul>
+      @for (carb of carbs; track carb) {
+        <li>
+          <label>
+            <input type="radio" name="carb" [(ngModel)]="selectedCarb" [value]="carb.hu.name" />
+            {{ carb.hu.name }}
+          </label>
+        </li>
+      }
+    </ul>
+    <button (click)="nextLunchStep()">Tovább</button>
+  }
+
+  @if (step === Step.LUNCH_LEGUME) {
+    <p>Válassz egy hüvelyest:</p>
+    <ul>
+      @for (legume of legumes; track legume) {
+        <li>
+          <label>
+            <input type="radio" name="legume" [(ngModel)]="selectedLegume" [value]="legume.hu.name" />
+            {{ legume.hu.name }}
+          </label>
+        </li>
+      }
+    </ul>
+    <button (click)="finishLunch()">Kész</button>
+  }
+
+  @if (step === Step.LUNCH_DONE) {
+    <p>Jó étvágyat! 🍽️</p>
     <button (click)="reset()">Újra</button>
   }
 </div>
