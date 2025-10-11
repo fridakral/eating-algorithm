@@ -1,179 +1,307 @@
-<div>
+
+<div class="card bg-base-300 shadow-xl w-96 m-auto">
+
   @if (step === Step.START) {
-    <p>Ennél valamit?</p>
-    <button (click)="chooseYesOrNo(true)">Igen</button>
-    <button (click)="chooseYesOrNo(false)">Nem</button>
+    <div class="card-body">
+      <div class="card-title">
+        <p>Ennél valamit?</p>
+      </div>
+      <div class="card-actions justify-end">
+        <button class="btn btn-primary" (click)="chooseYesOrNo(true)">Igen</button>
+        <button class="btn" (click)="chooseYesOrNo(false)">Nem</button>
+      </div>
+    </div>
   }
 
   @if (step === Step.GIF) {
-    <p>Noice! Have a nice day 🎉</p>
-    <button (click)="reset()">Újra</button>
+    <div class="card-body">
+      <div class="card-title">
+        <p>Noice! Have a nice day 🎉</p>
+      </div>
+      <div class="card-actions justify-end">
+        <button class="btn btn-primary" (click)="reset()">Újra</button>
+      </div>
+    </div>
   }
 
   @if (step === Step.HUNGER_CHECK) {
-    <p>Éhes vagy, vagy csak unatkozol?</p>
-    <button (click)="hungerCheck('Éhes vagyok')">Éhes vagyok</button>
-    <button (click)="hungerCheck('Unatkozom')">Unatkozom</button>
+    <div class="card-body">
+      <div class="card-title">
+        <p>Éhes vagy, vagy csak unatkozol?</p>
+      </div>
+      <div class="card-actions justify-end">
+        <button class="btn btn-primary" (click)="hungerCheck('Éhes vagyok')">Éhes vagyok</button>
+        <button class="btn" (click)="hungerCheck('Unatkozom')">Unatkozom</button>
+      </div>
+    </div>
   }
 
   @if (step === Step.UNBORED_TIPS) {
-    <p>Sétálj, igyál egy teát, nézz egy YouTube videót, olvass.</p>
-    <button (click)="reset()">Újra</button>
+    <div class="card-body">
+      <div class="card-title">
+        <p>Sétálj, igyál egy teát, nézz egy YouTube videót, olvass.</p>
+      </div>
+      <div class="card-actions justify-end">
+        <button class="btn btn-active" (click)="reset()">Újra</button>
+      </div>
+    </div>
   }
 
   @if (step === Step.MEAL_TYPE) {
-    <p>Mit ennél?</p>
-    <button (click)="chooseMeal('Reggeli')">Reggeli</button>
-    <button (click)="chooseMeal('Ebéd')">Ebéd</button>
-    <button (click)="chooseMeal('Vacsora')">Vacsora</button>
-    <button (click)="chooseMeal('Nasi')">Nasi</button>
+    <div class="card-body">
+      <div class="card-title">
+        <p>Mit ennél?</p>
+      </div>
+      <div class="card-actions flex flex-wrap gap-2 justify-end">
+        <button class="btn" (click)="chooseMeal('Reggeli')">Reggeli</button>
+        <button class="btn" (click)="chooseMeal('Ebéd')">Ebéd</button>
+        <button class="btn" (click)="chooseMeal('Vacsora')">Vacsora</button>
+        <button class="btn" (click)="chooseMeal('Nasi')">Nasi</button>
+      </div>
+    </div>
   }
 
   @if (step === Step.SWEET_OR_SALTY) {
-    <p>Édeset, vagy sósat?</p>
-    <button (click)="chooseTaste('Édes')">Édes</button>
-    <button (click)="chooseTaste('Sós')">Sós</button>
+    <div class="card-body">
+      <div class="card-title">
+        <p>Édeset, vagy sósat?</p>
+      </div>
+      <div class="card-actions justify-end">
+        <button class="btn" (click)="chooseTaste('Édes')">Édes</button>
+        <button class="btn" (click)="chooseTaste('Sós')">Sós</button>
+      </div>
+    </div>
   }
 
   @if (step === Step.FOOD_SUGGESTIONS) {
     @if (selectedMeal === 'Nasi') {
-      <p>Mit szeretnél a nasiból?</p>
-      <button (click)="showFruits()">Joghurt gyümivel/mákkal</button>
-      <button (click)="showNuts()">Egy kis marék olajos mag</button>
+      <div class="card-body">
+        <div class="card-title">
+          <p>Mit szeretnél a nasiból?</p>
+        </div>
+        <div class="card-actions justify-end flex flex-wrap gap-2">
+          <button class="btn" (click)="showFruits()">Joghurt gyümivel/mákkal</button>
+          <button class="btn" (click)="showNuts()">Egy kis marék olajos mag</button>
+        </div>
+      </div>
     }
 
     @if (selectedMeal === 'Reggeli' || selectedMeal === 'Vacsora') {
       @if (selectedTaste === 'Édes') {
-        <p>Ajánlott édes ételek:</p>
-        <ul>
-          @for (meal of meals; track meal) {
-            <li>{{ meal.hu.name }}</li>
-          }
-        </ul>
-        <button (click)="reset()">Újra</button>
+        <div class="card-body">
+          <div class="card-title">
+            <p>Ajánlott édes ételek:</p>
+          </div>
+          <ul class="list-disc list-inside">
+            @for (meal of meals; track meal) {
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" class="size-4 me-2 inline-block text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                {{ meal.hu.name }}
+              </li>
+            }
+          </ul>
+          <div class="card-actions justify-end mt-2">
+            <button class="btn" (click)="reset()">Újra</button>
+          </div>
+        </div>
       }
       @if (selectedTaste === 'Sós') {
-        <p>Ajánlott sós ételek:</p>
-        <ul>
-          @for (meal of meals; track meal) {
-            <li>{{ meal.hu.name }}</li>
-          }
-        </ul>
-        <button (click)="reset()">Újra</button>
+        <div class="card-body">
+          <div class="card-title">
+            <p>Ajánlott sós ételek:</p>
+          </div>
+          <ul class="list-disc list-inside">
+            @for (meal of meals; track meal) {
+              <li>{{ meal.hu.name }}</li>
+            }
+          </ul>
+          <div class="card-actions justify-end mt-2">
+            <button class="btn" (click)="reset()">Újra</button>
+          </div>
+        </div>
       }
     }
   }
 
   @if (step === Step.NASI_FRUIT) {
-    <p>Elérhető gyümölcsök:</p>
-    <ul>
-      @for (fruit of fruits; track fruit) {
-        <li>{{ fruit.hu.name }}</li>
-      }
-    </ul>
-    <button (click)="reset()">Újra</button>
+    <div class="card-body">
+      <div class="card-title">
+        <p>Elérhető gyümölcsök:</p>
+      </div>
+      <ul class="list-disc list-inside">
+        @for (fruit of fruits; track fruit) {
+          <li>{{ fruit.hu.name }}</li>
+        }
+      </ul>
+      <div class="card-actions justify-end mt-2">
+        <button class="btn" (click)="reset()">Újra</button>
+      </div>
+    </div>
   }
 
   @if (step === Step.NASI_NUTS) {
-    <p>Elérhető magvak:</p>
-    <ul>
-      @for (nut of nuts; track nut) {
-        <li>{{ nut.hu.name }}</li>
-      }
-    </ul>
-    <button (click)="reset()">Újra</button>
+    <div class="card-body">
+      <div class="card-title">
+        <p>Elérhető magvak:</p>
+      </div>
+      <ul class="list-disc list-inside">
+        @for (nut of nuts; track nut) {
+          <li>{{ nut.hu.name }}</li>
+        }
+      </ul>
+      <div class="card-actions justify-end mt-2">
+        <button class="btn" (click)="reset()">Újra</button>
+      </div>
+    </div>
   }
 
   @if (step === Step.LUNCH_FOOD_AVAILABLE) {
-    <p>Van étel a hűtőben?</p>
-    <button (click)="foodInFridge(true)">Igen</button>
-    <button (click)="foodInFridge(false)">Nem</button>
+    <div class="card-body">
+      <div class="card-title">
+        <p>Van étel a hűtőben?</p>
+      </div>
+      <div class="card-actions justify-end">
+        <button class="btn btn-primary" (click)="foodInFridge(true)">Igen</button>
+        <button class="btn" (click)="foodInFridge(false)">Nem</button>
+      </div>
+    </div>
   }
 
   @if (step === Step.LUNCH_EAT_IT) {
-    <p>Megennéd?</p>
-    <button (click)="eatIt(true)">Igen</button>
-    <button (click)="eatIt(false)">Nem</button>
+    <div class="card-body">
+      <div class="card-title">
+        <p>Megennéd?</p>
+      </div>
+      <div class="card-actions justify-end">
+        <button class="btn btn-primary" (click)="eatIt(true)">Igen</button>
+        <button class="btn" (click)="eatIt(false)">Nem</button>
+      </div>
+    </div>
   }
 
   @if (step === Step.LUNCH_COOK_SOMETHING) {
-    <p>Van kedved gyorsan összedobni valamit?</p>
-    <button (click)="cookSomething(true)">Igen</button>
-    <button (click)="cookSomething(false)">Nem</button>
+    <div class="card-body">
+      <div class="card-title">
+        <p>Van kedved gyorsan összedobni valamit?</p>
+      </div>
+      <div class="card-actions justify-end">
+        <button class="btn btn-primary" (click)="cookSomething(true)">Igen</button>
+        <button class="btn" (click)="cookSomething(false)">Nem</button>
+      </div>
+    </div>
   }
 
   @if (step === Step.LUNCH_MEAL_TYPE) {
-    <p>Válassz egy ételtípust:</p>
-    <button (click)="chooseLunchType('Leves')">Leves</button>
-    <button (click)="chooseLunchType('Ragu')">Ragu</button>
-    <button (click)="chooseLunchType('Sült')">Sült</button>
-    <button (click)="chooseLunchType('Rakott')">Rakott</button>
+    <div class="card-body">
+      <div class="card-title">
+        <p>Válassz egy ételtípust:</p>
+      </div>
+      <div class="card-actions flex flex-wrap gap-2 justify-end">
+        <button class="btn" (click)="chooseLunchType('Leves')">Leves</button>
+        <button class="btn" (click)="chooseLunchType('Ragu')">Ragu</button>
+        <button class="btn" (click)="chooseLunchType('Sült')">Sült</button>
+        <button class="btn" (click)="chooseLunchType('Rakott')">Rakott</button>
+      </div>
+    </div>
   }
 
   @if (step === Step.LUNCH_VEGGIES) {
-    <p>Válassz zöldségeket:</p>
-    <ul>
-      @for (veg of veggies; track veg) {
-        <li>
-          <label>
-            <input
-              type="checkbox"
-              [checked]="false">
+    <div class="card-body">
+      <div class="card-title">
+        <p>Válassz zöldségeket:</p>
+      </div>
+      <ul class="space-y-1">
+        @for (veg of veggies; track veg) {
+          <li>
+            <label class="label cursor-pointer">
+              <input type="checkbox" class="checkbox checkbox-sm me-2" [checked]="false">
               {{ veg.hu.name }}
-          </label>
-        </li>
-      }
-    </ul>
-    <button (click)="nextLunchStep()">Tovább</button>
+            </label>
+          </li>
+        }
+      </ul>
+      <div class="card-actions justify-end mt-2">
+        <button class="btn btn-primary" (click)="nextLunchStep()">Tovább</button>
+      </div>
+    </div>
   }
 
   @if (step === Step.LUNCH_PROTEIN) {
-    <p>Válassz egy fehérjét:</p>
-    <ul>
-      @for (protein of proteins; track protein) {
-        <li>
-          <label>
-            <input type="radio" name="protein" [(ngModel)]="selectedProtein" [value]="protein.hu.name" />
-            {{ protein.hu.name }}
-          </label>
-        </li>
-      }
-    </ul>
-    <button (click)="nextLunchStep()">Tovább</button>
+    <div class="card-body">
+      <div class="card-title">
+        <p>Válassz egy fehérjét:</p>
+      </div>
+      <ul class="space-y-1">
+        @for (protein of proteins; track protein) {
+          <li>
+            <label class="label cursor-pointer">
+              <input type="radio" name="protein" class="radio radio-sm me-2" [(ngModel)]="selectedProtein" [value]="protein.hu.name" />
+              {{ protein.hu.name }}
+            </label>
+          </li>
+        }
+      </ul>
+      <div class="card-actions justify-end mt-2">
+        <button class="btn btn-primary" (click)="nextLunchStep()">Tovább</button>
+      </div>
+    </div>
   }
 
   @if (step === Step.LUNCH_CARB) {
-    <p>Válassz egy szénhidrátot:</p>
-    <ul>
-      @for (carb of carbs; track carb) {
-        <li>
-          <label>
-            <input type="radio" name="carb" [(ngModel)]="selectedCarb" [value]="carb.hu.name" />
-            {{ carb.hu.name }}
-          </label>
-        </li>
-      }
-    </ul>
-    <button (click)="nextLunchStep()">Tovább</button>
+    <div class="card-body">
+      <div class="card-title">
+        <p>Válassz egy szénhidrátot:</p>
+      </div>
+      <ul class="space-y-1">
+        @for (carb of carbs; track carb) {
+          <li>
+            <label class="label cursor-pointer">
+              <input type="radio" name="carb" class="radio radio-sm me-2" [(ngModel)]="selectedCarb" [value]="carb.hu.name" />
+              {{ carb.hu.name }}
+            </label>
+          </li>
+        }
+      </ul>
+      <div class="card-actions justify-end mt-2">
+        <button class="btn btn-primary" (click)="nextLunchStep()">Tovább</button>
+      </div>
+    </div>
   }
 
   @if (step === Step.LUNCH_LEGUME) {
-    <p>Válassz egy hüvelyest:</p>
-    <ul>
-      @for (legume of legumes; track legume) {
-        <li>
-          <label>
-            <input type="radio" name="legume" [(ngModel)]="selectedLegume" [value]="legume.hu.name" />
-            {{ legume.hu.name }}
-          </label>
-        </li>
-      }
-    </ul>
-    <button (click)="finishLunch()">Kész</button>
+    <div class="card-body">
+      <div class="card-title">
+        <p>Válassz egy hüvelyest:</p>
+      </div>
+      <ul class="space-y-1">
+        @for (legume of legumes; track legume) {
+          <li>
+            <label class="label cursor-pointer">
+              <input type="radio" name="legume" class="radio radio-sm me-2" [(ngModel)]="selectedLegume" [value]="legume.hu.name" />
+              {{ legume.hu.name }}
+            </label>
+          </li>
+        }
+      </ul>
+      <div class="card-actions justify-end mt-2">
+        <button class="btn btn-success" (click)="finishLunch()">Kész</button>
+      </div>
+    </div>
   }
 
   @if (step === Step.LUNCH_DONE) {
-    <p>Jó étvágyat! 🍽️</p>
-    <button (click)="reset()">Újra</button>
+    <div class="card-body">
+      <div class="card-title">
+        <p>Jó étvágyat! 🍽️</p>
+      </div>
+      <div class="card-actions justify-end">
+        <button class="btn" (click)="reset()">Újra</button>
+      </div>
+    </div>
   }
+
+</div>
+
+<div class="absolute bottom-0 footer-center h-8">
+  <p>An app to help my boyfriend decide what to eat — because <b>“I don’t know, you pick”</b> shouldn’t be a 3-hour conversation.</p>
 </div>

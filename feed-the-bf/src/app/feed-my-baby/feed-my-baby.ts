@@ -10,7 +10,10 @@ import {FormsModule} from '@angular/forms';
     FormsModule
   ],
   templateUrl: './feed-my-baby.html',
-  styleUrl: './feed-my-baby.css'
+  styleUrl: './feed-my-baby.css',
+  host:{
+    class: 'flex items-center justify-center h-screen w-screen'
+  }
 })
 export class FeedMyBaby {
   step = Step.START;

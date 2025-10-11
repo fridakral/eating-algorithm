@@ -1,1 +1,23 @@
-{}
+{
+  "hosting": {
+    "public": "dist/feed-the-bf/browser",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "redirects": [
+      {
+        "source": "/(.*)",
+        "destination": "https://bf-feeder.kral.hu",
+        "type": 301
+      }
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
